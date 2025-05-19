@@ -68,7 +68,7 @@ function extensionSummary() {
       document.querySelector('.extensions-grid').innerHTML = inActiveHtml;
       isClicked = true;
       document.querySelector('.all').classList.remove('isActive');
-      document.querySelector('.active').classList.add('isActive')
+      document.querySelector('.inactive').classList.add('isActive')
       document.querySelector('.active').classList.remove('isActive')
 
     });
