@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="styles.css">
+
+  <title>Browser extensions manager UI</title>
+</head>
+
+<body class="dark">
+  <div class="container">
+    <div class="wrapper">
+      <header>
+        <div class="image-container">
+          <img src="assets/images/logo.svg" alt="extensions Logo">
+          <div class="image-text">Extensions</div>
+        </div>
+        <div class="toggle-buttons">
+          <button class="button-dark"><img src="assets/images/icon-sun.svg" alt="Sun image"></button>
+        </div>
+      </header>
+
+      <nav>
+        <div class="description">
+          <h2>Extensions List</h2>
+        </div>
+        <div class="nav-buttons">
+          <div class="button-container">
+            <button class="button-white all">All</button>
+          </div>
+          <div class="button-container">
+            <button class="button-white active">Active</button>
+          </div>
+          <div class="button-container">
+            <button class="button-white inactive">Inactive</button>
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        <div class="extensions-grid">
+        </div>
+      </main>
+
+      <script src="extensions.js" type="module"></script>
+    </div>
+  </div>
+</body>
+
+</html>
