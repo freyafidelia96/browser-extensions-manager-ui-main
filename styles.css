@@ -202,7 +202,7 @@ nav .nav-buttons .isActive {
 }
 
 .extension {
-  border: solid 1px thin;
+  border: solid 1px transparent;
   border-radius: 15px;
   padding: 15px;
 }
@@ -294,6 +294,33 @@ input:checked+.slider {
   background: hsl(3, 86%, 64%);
 }
 
+@media (max-width: 1028px) {
+  .container {
+    width: 700px;
+  }
+
+  header {
+    width: 700px;
+  }
+
+  header button {
+    margin-inline-start: 460px;
+  }
+
+  nav {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    margin-block-start: 100px;
+  }
+
+  .extensions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-block-start: 30px;
+  }
+}
 
 @media (max-width: 430px) {
   .container {
@@ -320,5 +347,41 @@ input:checked+.slider {
     flex-direction: column;
     gap: 10px;
     margin-block-start: 30px;
+  }
+}
+
+@media (max-width: 330px) {
+  .container {
+    width: 300px;
+  }
+
+  header {
+    width: 300px;
+  }
+
+  header button {
+    margin-inline-start: 50px;
+  }
+
+  nav {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    margin-block-start: 90px;
+  }
+
+  .extensions-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-block-start: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+  }
+
+  .extension {
+    width: 300px;
   }
 }
