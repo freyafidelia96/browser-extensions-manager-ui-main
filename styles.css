@@ -64,7 +64,7 @@ body {
 }
 
 header {
-  position: fixed;
+  /* position: fixed; */
   display: flex;
   align-items: center;
   width: 1256px;
@@ -125,7 +125,7 @@ header button:hover {
 /* nav */
 
 nav {
-  margin-block-start: 100px;
+  margin-block-start: 50px;
   display: flex;
   justify-content: space-between;
   width: 1256px;
@@ -153,7 +153,7 @@ nav .nav-buttons button,
 .remove {
   border: solid 1px transparent;
   padding-inline: 15px;
-  padding-block: 8px;
+  padding-block: 10px;
   border-radius: 50px;
   font-weight: 600;
 }
@@ -311,7 +311,7 @@ input:checked+.slider {
     width: 700px;
     display: flex;
     flex-direction: column;
-    margin-block-start: 100px;
+    margin-block-start: 50px;
   }
 
   .extensions-grid {
@@ -339,7 +339,7 @@ input:checked+.slider {
     width: 360px;
     display: flex;
     flex-direction: column;
-    margin-block-start: 70px;
+    margin-block-start: 50px;
   }
 
   .extensions-grid {
@@ -360,14 +360,14 @@ input:checked+.slider {
   }
 
   header button {
-    margin-inline-start: 50px;
+    margin-inline-start: 60px;
   }
 
   nav {
     width: 300px;
     display: flex;
     flex-direction: column;
-    margin-block-start: 90px;
+    margin-block-start: 50px;
   }
 
   .extensions-grid {
