@@ -50,7 +50,8 @@ function extensionSummary() {
     () => {
       document.querySelector('.extensions-grid').innerHTML = extensionHtml;
       isClicked = true;
-      document.querySelector('.active').classList.remove('isActive')
+      document.querySelector('.active').classList.remove('isActive');
+      document.querySelector('.inactive').classList.remove('isActive');
     });
 
   document.querySelector('.active').addEventListener('click',
