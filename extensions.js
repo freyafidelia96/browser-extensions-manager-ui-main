@@ -1,22 +1,16 @@
-function extensionSummary() {
+const grid = document.querySelector('.extensions-grid');
+const filterButtons = {
+  all: document.querySelector('.all'),
+  active: document.querySelector('.active'),
+  inactive: document.querySelector('.inactive'),
+};
 
-  const extensionsData = JSON.parse(localStorage.getItem("extensionData"));
+let extensions = JSON.parse(localStorage.getItem('extensionData'))
+  ?? await fetch('data.json').then((response) => response.json());
+let filter = 'all';
 
-  if (!extensionsData) {
-    fetch('data.json')
-      .then(response => response.json())
-      .then(data => {
-        localStorage.setItem("extensionData", JSON.stringify(data));
-      })
-      .catch(error => console.error('Error loading JSON:', error));
-  }
-
-  let extensionHtml = '';
-  let isActiveHtml = '';
-  let inActiveHtml = '';
-
-  extensionsData.forEach((extension) => {
-    let html = `
+function cardHtml(extension) {
+  return `
       <div class="extension">
         <div class="logo-description">
           <img src="${extension.logo}" alt="logo-plus">
@@ -36,99 +30,61 @@ function extensionSummary() {
         </div>
       </div>
     `;
-    if (extension.isActive) {
-      isActiveHtml += html;
-    } else {
-      inActiveHtml += html;
-    }
-    extensionHtml += html;
+}
+
+function render() {
+  const visible = extensions.filter((extension) => filter === 'all' || extension.isActive === (filter === 'active'));
+  grid.innerHTML = visible.map(cardHtml).join('');
+}
+
+function save() {
+  localStorage.setItem('extensionData', JSON.stringify(extensions));
+  render();
+}
+
+function setFilter(name) {
+  filter = name;
+  Object.entries(filterButtons).forEach(([buttonName, button]) => {
+    button.classList.toggle('isActive', buttonName === name);
   });
+  render();
+}
 
-  let isClicked = false;
+Object.entries(filterButtons).forEach(([name, button]) => {
+  button.addEventListener('click', () => setFilter(name));
+});
 
-  document.querySelector('.all').addEventListener('click',
-    () => {
-      document.querySelector('.extensions-grid').innerHTML = extensionHtml;
-      isClicked = true;
-      document.querySelector('.active').classList.remove('isActive');
-      document.querySelector('.inactive').classList.remove('isActive');
-    });
+grid.addEventListener('change', (event) => {
+  const extension = extensions.find((ext) => ext.name === event.target.dataset.name);
+  extension.isActive = event.target.checked;
+  save();
+});
 
-  document.querySelector('.active').addEventListener('click',
-    () => {
-      document.querySelector('.extensions-grid').innerHTML = isActiveHtml;
-      isClicked = true;
-      document.querySelector('.all').classList.remove('isActive');
-      document.querySelector('.inactive').classList.remove('isActive')
-      document.querySelector('.active').classList.add('isActive')
+grid.addEventListener('click', (event) => {
+  if (!event.target.matches('.remove')) return;
+  extensions = extensions.filter((extension) => extension.name !== event.target.dataset.name);
+  save();
+});
 
-    });
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  document.body.classList.toggle('light');
 
-  document.querySelector('.inactive').addEventListener('click',
-    () => {
-      document.querySelector('.extensions-grid').innerHTML = inActiveHtml;
-      isClicked = true;
-      document.querySelector('.all').classList.remove('isActive');
-      document.querySelector('.inactive').classList.add('isActive')
-      document.querySelector('.active').classList.remove('isActive')
-
-    });
-
-  if (!isClicked) {
-    document.querySelector('.extensions-grid').innerHTML = extensionHtml;
-    document.querySelector('.all').classList.add('isActive');
-  }
-
-  let allInputs = document.querySelectorAll('.input');
-
-  allInputs.forEach((input) => {
-    input.addEventListener('change', () => {
-      let extensionName = input.dataset.name;
-
-      extensionsData.forEach((extension) => {
-        if (extension.name === extensionName) {
-          extension.isActive = input.checked;
-          localStorage.setItem("extensionData", JSON.stringify(extensionsData));
-          extensionSummary();
-        }
-      });
-    });
-  });
-
-  document.querySelectorAll('.remove').forEach((removeButton) => {
-    removeButton.addEventListener('click', () => {
-      let extensionName = removeButton.dataset.name;
-      let updatedExtensionsData = extensionsData.filter((extension) => extension.name != extensionName);
-      localStorage.setItem('extensionData', JSON.stringify(updatedExtensionsData));
-
-      console.log(updatedExtensionsData);
-      extensionSummary();
-    })
-  })
-
-
-  function toggleTheme() {
-    document.body.classList.toggle('dark');
-    document.body.classList.toggle('light');
-
-    if (document.body.classList.contains('dark')) {
-      document.querySelector('.image-container').innerHTML += `<div class="image-text">Extensions</div>`;
-      document.querySelector('.toggle-buttons').innerHTML = `
+  if (document.body.classList.contains('dark')) {
+    document.querySelector('.image-container').innerHTML += `<div class="image-text">Extensions</div>`;
+    document.querySelector('.toggle-buttons').innerHTML = `
       <button class="button-dark"><img src="assets/images/icon-sun.svg" alt="Sun image"></button>
     `;
-    } else {
-      document.querySelector('.image-text')?.remove();
-      document.querySelector('.toggle-buttons').innerHTML = `
+  } else {
+    document.querySelector('.image-text')?.remove();
+    document.querySelector('.toggle-buttons').innerHTML = `
       <button class="button-dark"><img src="assets/images/icon-moon.svg" alt="Moon image"></button>
     `;
-    }
-
-    document.querySelector('.button-dark').addEventListener('click', toggleTheme);
   }
 
   document.querySelector('.button-dark').addEventListener('click', toggleTheme);
-
 }
 
+document.querySelector('.button-dark').addEventListener('click', toggleTheme);
 
-extensionSummary();
+setFilter('all');
